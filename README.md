@@ -1,6 +1,8 @@
 # Wheel-Of-Playlist-Auto-Update
 A simple Python script designed to automatically push a given song to the DistroKid "Wheel Of Playlist"
 
+NEEDS TO BE UPDATED TO V0.2
+
  ## Index
  * [Installation](https://github.com/Skribb11es/Wheel-Of-Playlist-Auto-Update/blob/main/README.md#installation)
    * [Firefox](https://github.com/Skribb11es/Wheel-Of-Playlist-Auto-Update#firefox)
