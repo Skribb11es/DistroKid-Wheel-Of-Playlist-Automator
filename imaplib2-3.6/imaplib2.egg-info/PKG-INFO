@@ -1,0 +1,33 @@
+Metadata-Version: 2.1
+Name: imaplib2
+Version: 3.6
+Summary: A threaded Python IMAP4 client.
+Home-page: https://github.com/jazzband/imaplib2/
+Author: Piers Lauder
+License: MIT
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3 :: Only
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Topic :: Software Development :: Libraries
+Classifier: Topic :: Utilities
+Classifier: License :: OSI Approved :: MIT License
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+License-File: LICENCE
+
+# imaplib2: a threaded Python IMAP4 client
+
+[![Jazzband](https://jazzband.co/static/img/badge.svg)](https://jazzband.co/)
+[![codecov](https://codecov.io/gh/jazzband/imaplib2/branch/master/graph/badge.svg?token=DZZ3P6438E)](https://codecov.io/gh/jazzband/imaplib2)
+
+Based on RFC 3501 and original imaplib module.
+
+This is a version of imaplib that uses threads to allow full use of the
+IMAP4 concurrency features, and to de-couple a user of imaplib from i/o
+lags, except where explicitly allowed.
+
+Documented in imaplib2.html

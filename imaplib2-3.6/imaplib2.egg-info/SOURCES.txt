@@ -1,0 +1,11 @@
+LICENCE
+README.md
+pyproject.toml
+setup.cfg
+setup.py
+imaplib2/__init__.py
+imaplib2/imaplib2.py
+imaplib2.egg-info/PKG-INFO
+imaplib2.egg-info/SOURCES.txt
+imaplib2.egg-info/dependency_links.txt
+imaplib2.egg-info/top_level.txt
