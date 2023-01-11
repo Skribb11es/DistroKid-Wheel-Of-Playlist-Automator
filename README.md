@@ -1,20 +1,24 @@
-# Wheel-Of-Playlist-Auto-Update
+# DistroKid-Wheel-Of-Playlist-Automator
 A simple Python script designed to automatically push a given song to the DistroKid "Wheel Of Playlist"
 
-NEEDS TO BE UPDATED TO V0.2
-
  ## Index
- * [Installation](https://github.com/Skribb11es/Wheel-Of-Playlist-Auto-Update/blob/main/README.md#installation)
-   * [Firefox](https://github.com/Skribb11es/Wheel-Of-Playlist-Auto-Update#firefox)
-     * [DistroKid Cookies](https://github.com/Skribb11es/Wheel-Of-Playlist-Auto-Update/blob/main/README.md#distrokid-cookies)
-     * [Spotify Cookie](https://github.com/Skribb11es/Wheel-Of-Playlist-Auto-Update#spotify-cookie)
+ * [Installation](https://github.com/Skribb11es/DistroKid-Wheel-Of-Playlist-Automator/blob/main/README.md#installation)
+   * [Cookies](https://github.com/Skribb11es/DistroKid-Wheel-Of-Playlist-Automator#cookies)
+     * [DistroKid Cookies](https://github.com/Skribb11es/DistroKid-Wheel-Of-Playlist-Automator/blob/main/README.md#distrokid-cookies)
+     * [Spotify Cookie](https://github.com/Skribb11es/DistroKid-Wheel-Of-Playlist-Automator#spotify-cookie)
+   * [Email Integration](https://github.com/Skribb11es/DistroKid-Wheel-Of-Playlist-Automator#email-integration)
+     * [Gmail](https://github.com/Skribb11es/DistroKid-Wheel-Of-Playlist-Automator#gmail)
+       * [IMAP Setup](https://github.com/Skribb11es/DistroKid-Wheel-Of-Playlist-Automator#imap-Setup)
+       * [With 2FA](https://github.com/Skribb11es/DistroKid-Wheel-Of-Playlist-Automator#with-2fa)
+       * [Without 2FA](https://github.com/Skribb11es/DistroKid-Wheel-Of-Playlist-Automator#without-2fa)
+   * [Discord Integration](https://github.com/Skribb11es/DistroKid-Wheel-Of-Playlist-Automator#discord-integration)
 
- * [Execution](https://github.com/Skribb11es/Wheel-Of-Playlist-Auto-Update/blob/main/README.md#execution)
-   * [Windows](https://github.com/Skribb11es/Wheel-Of-Playlist-Auto-Update#windows)
-   * [Linux](https://github.com/Skribb11es/Wheel-Of-Playlist-Auto-Update#linux)
-   * [Mac](https://github.com/Skribb11es/Wheel-Of-Playlist-Auto-Update#mac)
+ * [Execution](https://github.com/Skribb11es/DistroKid-Wheel-Of-Playlist-Automator/blob/main/README.md#execution)
+   * [Windows](https://github.com/Skribb11es/DistroKid-Wheel-Of-Playlist-Automator#windows)
+   * [Linux](https://github.com/Skribb11es/DistroKid-Wheel-Of-Playlist-Automator#linux)
+   * [Mac](https://github.com/Skribb11es/DistroKid-Wheel-Of-Playlist-Automator#mac)
 
- * [Interaction](https://github.com/Skribb11es/Wheel-Of-Playlist-Auto-Update/blob/main/README.md#interaction)
+ * [Interaction](https://github.com/Skribb11es/DistroKid-Wheel-Of-Playlist-Automator/blob/main/README.md#interaction)
 
 ## Installation
 First and foremost download the contents of the repo, and unzip them in an ideally empty folder.
@@ -23,25 +27,21 @@ Next, assuming you don't already have [Python](https://www.python.org/) you need
 
 ```pip install -r requirements.txt```
 
-Once you have installed both [Python](https://www.python.org/) and the requirements, open the config.py in your favorite text editor or IDE and fill out the blanks accordingly. (Based on what browser you use this will be different, below is a list of the most common browsers and how to access the needed information for each field that needs to be filled out)
+Once you have installed both [Python](https://www.python.org/) and the requirements, open the file `config.py` in your favorite text editor or IDE and fill out the blanks according to the instructions laid out in the [Cookies](https://github.com/Skribb11es/DistroKid-Wheel-Of-Playlist-Automator#cookies) section. (Based on what browser you use this will be different, below is a list of the most common browsers and how to access the needed information for each field that needs to be filled out)
 
-### Firefox
-If you are using Firefox, first off you have the ability to use automatic cookie detection, unlike any other browser. Unfortunately, this is due to Firefox storing cookies as plain text in a Sqlite DB, unlike most other mainstream browsers.
-
-To enable automatic cookie detection, change the `cGrab` variable to `True` in the config, save the file, and you're done.
-
-```cGrab = True```
-
-However, if you are like me and would rather manually define your information, this too is an option.
+### Cookies
 
 #### DistroKid Cookies
 * Navigate to [DistroKid](https://distrokid.com)'s website
 * Open dev tools (`Ctrl+Shift+I` or `f12`)
-* Navigate to the storage tab, and click the dropdown labeled Cookies
-* locate the cookies labeled `cfid` and `COMPUTER_00000000000000000000000000000000` (the `COMPUTER_` cookie instead having a randomly generated string instead of 32 zeros.)
+* For firefox, navigate to the storage tab, and click the dropdown labeled Cookies.
+* Chromium based browsers, such as Opera, Edge, Google Chrome, Brave, etc, select to the lock icon to the left of the search bar, select cookies, and then the dropdown for `distrokid.com`, finally select the Cookies folder.
+* locate the cookies labeled `cfid`, `BEEFARONI`, `DK_SYN`, and `COMPUTER_00000000000000000000000000000000` (the `COMPUTER_` cookie will instead have a randomly generated string instead of 32 zeros.).
 * Copy the Value of the `cfid` cookie, and paste it between the "" for the variable `DKCFID`
 * Copy the Value of the `COMPUTER_` cookie, and paste it between the "" for the variable `DKCOMP`
 * Copy the Name of the `COMPUTER_` cookie, and paste it between the "" for the variable `DKCOMPKEY`
+* Copy the Value of the `BEEFARONI` cookie, and paste it between the "" for the variable `DKBEEFARONI`
+* Copy the Value of the `DK_SYN` cookie, and paste it between the "" for the variable `DKSYN`
 
 #### Spotify Cookie
 * Navigate to [Spotify](https://spotify.com)'s website
@@ -49,6 +49,48 @@ However, if you are like me and would rather manually define your information, t
 * Navigate to the storage tab, and click the dropdown labeled Cookies
 * locate the cookie labeled `sp_dc`
 * Copy the Value of the `sp_dc` cookie, and paste it between the "" for the variable `SP`
+
+### Email Integration
+
+Since DistroKid sends you an email each time your song is removed from the playlist, we are able to use that as a trigger to push our song to the playlist again
+
+This section will only cover how to use Gmail as an IMAP server, if you use any other email provider, it is recommended that you consult their documentation on how to connect your email account to this script.
+
+**IMPORTANT!** Note that using IMAP will cause Gmail to show your emails as read, even if you have not manually opened them. (I am currently unaware if this occurs with any other email platforms)
+
+#### Gmail
+
+##### IMAP Setup
+* Navigate to your [Gmail homepage](https://mail.google.com/)
+* Navigate to the settings cog in the top right.
+* Select `See all settings`.
+* Navigate to the tab labeled `Forwarding and POP/IMAP`.
+* Select the `Enable IMAP` option.
+* Select `Save Changes` at the bottom of the page.
+
+##### With 2FA
+* Navigate to your [Google Account](https://myaccount.google.com/).
+* Navigate to `Security`.
+* Navigate to `App Passwords` (You may need to enter your password after you select this).
+* From the leftmost dropdown select `Mail`, then select the type of device from the other dropdown.
+* Select `Generate`
+* Copy the string of characters within the yellow text box.
+* Return to your text editor and open `config.py`.
+* Input your email address between the "" for the variable `IMAPUSERNAME`.
+* Input the text you just copied between the "" for the variable `IMAPPASSWORD`.
+* Input `imap.gmail.com` between the "" for the variable `IMAPSERVER`.
+
+##### Without 2FA
+* Return to your text editor and open `config.py`.
+* Input your email address between the "" for the variable `IMAPUSERNAME`.
+* Input your Gmail account password between the "" for the variable `IMAPPASSWORD`.
+* Input `imap.gmail.com` between the "" for the variable `IMAPSERVER`.
+
+### Discord Integration
+This is only really useful if you plan on running this script remotely, or you just want a notification through discord that your song has been pushed to the playlist.
+* In your discord server of choice (I would reccomend an empty server), make a webhook. (Hover over a channel, select the cog icon, click `Integrations`, then `Create Webhook`, select the new webhook, and click `Copy Webhook URL`)
+* Input the webhook you just copied between the "" for the variable `webhookURL`.
+* Change the value of the `webhook` variable to `True`
 
 Assuming you have followed the steps above to a T, it is now time for you to run the script. Scroll down to the section labeled `Execution`, and follow the steps provided.
 
