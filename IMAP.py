@@ -63,5 +63,5 @@ class Idler(object):
             status, info = self.M.uid('fetch', info[0].split()[-1], '(RFC822)')
             if status == "OK":
                 object = email.message_from_bytes(info[0][1])
-                if object['From'].split()[1] == f"<mailbot@distrokid.com>":
+                if object['From'] == f"DistroKid <mailbot@distrokid.com>":
                     self.callFunc(self.args[0], self.args[1])

@@ -1,5 +1,5 @@
 #Makes all of the needed imports, some are currently unused but will find use later as more features are added ;D
-import imaplib2, time, email, json, os, string, random, logging, contextlib, sqlite3
+import imaplib2, time, email, json, os, sys, string, random, logging, contextlib
 from requests import request, Session
 from http.client import HTTPConnection
 from bs4 import BeautifulSoup
@@ -15,12 +15,15 @@ def makePlaylistRequest(ses, ID):
     try:
         pos = place.json()["positions"]
         pos.sort()
-        print("Done! Your song has been pushed to position " + str(pos[0]) + "!")
+        if webhook:
+            ses.post(webhookURL, data={"content": "@here Your song has been pushed to position " + str(pos[0]) + "!"})
+        else:
+            print("Done! Your song has been pushed to position " + str(pos[0]) + "!")
 
     except:
         try:
             if place.json()["error"] != "":
-                print("Your song is still in the playlist!")
+                return
         except:
             print("An unknown error occurred.")
 
@@ -28,7 +31,9 @@ def main():
     #Opens a session
     session = Session()
     session.max_redirects = 4
-    session.get("https://distrokid.com/wheel/")
+    session.get("https://distrokid.com/wheel")
+
+    logging.getLogger().setLevel(logging.CRITICAL)
 
     #Only used for debugging purposes, or if you just enjoy seeing a console full of interesting information (I know I do ;D)
     if debug == True:
@@ -44,6 +49,8 @@ def main():
     session.cookies.set("cfid", DKCFID)
     session.cookies.set(DKCOMPKEY, DKCOMP)
     session.cookies.set('sp_dc', SP)
+    session.cookies.set('BEEFARONI', DKBEEFARONI)
+    session.cookies.set("DK_SYN", DKSYN)
 
     #Fetches the song list and parses it, so we can then output it in a "good looking" manner later.
     grabSongs = session.get("https://distrokid.com/wheel/")
@@ -73,13 +80,16 @@ def main():
     while True:
         inp = input()
         if inp == "y":
-            M = imaplib2.IMAP4_SSL(IMAPSERVER)
-            M.login(IMAPUSERNAME,IMAPPASSWORD)
-            M.select("INBOX")
-            idler = Idler(M, makePlaylistRequest, [session, songId])
-            idler.start()
-            idler.join()
-            break
+            while True:
+                M = imaplib2.IMAP4_SSL(IMAPSERVER)
+                M.login(IMAPUSERNAME,IMAPPASSWORD)
+                M.select("INBOX")
+                idler = Idler(M, makePlaylistRequest, [session, songId])
+                idler.start()
+                time.sleep(3600)
+                idler.join()
+                idler.stop()
+                M.logout()
         if inp == "n":
             makePlaylistRequest(session, songId)
             break
