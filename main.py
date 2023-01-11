@@ -86,7 +86,7 @@ def main():
                 M.select("INBOX")
                 idler = Idler(M, makePlaylistRequest, [session, songId])
                 idler.start()
-                time.sleep(3600)
+                time.sleep(10800)
                 idler.join()
                 idler.stop()
                 M.logout()
