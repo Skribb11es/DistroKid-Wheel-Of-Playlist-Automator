@@ -35,7 +35,7 @@ Once you have installed both [Python](https://www.python.org/) and the requireme
 * Navigate to [DistroKid](https://distrokid.com)'s website
 * Open dev tools (`Ctrl+Shift+I` or `f12`)
 * For firefox, navigate to the storage tab, and click the dropdown labeled Cookies.
-* Chromium based browsers, such as Opera, Edge, Google Chrome, Brave, etc, select to the lock icon to the left of the search bar, select cookies, and then the dropdown for `distrokid.com`, finally select the Cookies folder.
+* Chromium-based browsers, such as Opera, Edge, Google Chrome, Brave, etc, select the lock icon to the left of the search bar, select cookies, and then the dropdown for `distrokid.com`, and finally select the Cookies folder.
 * locate the cookies labeled `cfid`, `BEEFARONI`, `DK_SYN`, and `COMPUTER_00000000000000000000000000000000` (the `COMPUTER_` cookie will instead have a randomly generated string instead of 32 zeros.).
 * Copy the Value of the `cfid` cookie, and paste it between the "" for the variable `DKCFID`
 * Copy the Value of the `COMPUTER_` cookie, and paste it between the "" for the variable `DKCOMP`
@@ -52,7 +52,7 @@ Once you have installed both [Python](https://www.python.org/) and the requireme
 
 ### Email Integration
 
-Since DistroKid sends you an email each time your song is removed from the playlist, we are able to use that as a trigger to push our song to the playlist again
+Since DistroKid sends you an email each time your song is removed from the playlist, we can use that as a trigger to push our song to the playlist again
 
 This section will only cover how to use Gmail as an IMAP server, if you use any other email provider, it is recommended that you consult their documentation on how to connect your email account to this script.
 
@@ -87,8 +87,8 @@ This section will only cover how to use Gmail as an IMAP server, if you use any 
 * Input `imap.gmail.com` between the "" for the variable `IMAPSERVER`.
 
 ### Discord Integration
-This is only really useful if you plan on running this script remotely, or you just want a notification through discord that your song has been pushed to the playlist.
-* In your discord server of choice (I would reccomend an empty server), make a webhook. (Hover over a channel, select the cog icon, click `Integrations`, then `Create Webhook`, select the new webhook, and click `Copy Webhook URL`)
+This is only useful if you plan on running this script remotely, or are looking to get a notification through discord that your song has been pushed to the playlist.
+* In your discord server of choice (I would recommend an empty server), make a webhook. (Hover over a channel, select the cog icon, click `Integrations`, then `Create Webhook`, select the new webhook, and click `Copy Webhook URL`)
 * Input the webhook you just copied between the "" for the variable `webhookURL`.
 * Change the value of the `webhook` variable to `True`
 
