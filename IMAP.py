@@ -12,7 +12,7 @@ class Idler(object):
         self.event = Event()
         self.callFunc = callbackFunc
         self.args = callbackArgs
-        callbackFunc(callbackArgs[0], callbackArgs[1])
+        callbackFunc(callbackArgs[0])
  
     def start(self):
         self.thread.start()
@@ -28,40 +28,46 @@ class Idler(object):
     def idle(self):
         # Starting an unending loop here
         while True:
-            # This is part of the trick to make the loop stop 
-            # when the stop() command is given
-            if self.event.isSet():
-                return
-            self.needsync = False
-            # A callback method that gets called when a new 
-            # email arrives. Very basic, but that's good.
-            def callback(args):
-                if not self.event.isSet():
-                    self.needsync = True
-                    self.event.set()
-            # Do the actual idle call. This returns immediately, 
-            # since it's asynchronous.
-            self.M.idle(callback=callback)
-            # This waits until the event is set. The event is 
-            # set by the callback, when the server 'answers' 
-            # the idle call and the callback function gets 
-            # called.
-            self.event.wait()
-            # Because the function sets the needsync variable,
-            # this helps escape the loop without doing 
-            # anything if the stop() is called. Kinda neat 
-            # solution.
-            if self.needsync:
-                self.event.clear()
-                self.dosync()
+            try:
+                # This is part of the trick to make the loop stop 
+                # when the stop() command is given
+                if self.event.isSet():
+                    return
+                self.needsync = False
+                # A callback method that gets called when a new 
+                # email arrives. Very basic, but that's good.
+                def callback(args):
+                    if not self.event.isSet():
+                        self.needsync = True
+                        self.event.set()
+                # Do the actual idle call. This returns immediately, 
+                # since it's asynchronous.
+                self.M.idle(callback=callback)
+                # This waits until the event is set. The event is 
+                # set by the callback, when the server 'answers' 
+                # the idle call and the callback function gets 
+                # called.
+                self.event.wait()
+                # Because the function sets the needsync variable,
+                # this helps escape the loop without doing 
+                # anything if the stop() is called. Kinda neat 
+                # solution.
+                if self.needsync:
+                    self.event.clear()
+                    self.dosync()
+            except:
+                self.event.set()
  
     # The method that gets called when a new email arrives. 
     # Replace it with something better.
     def dosync(self):
-        status, info = self.M.uid('search', None, 'ALL')
-        if status == "OK":
-            status, info = self.M.uid('fetch', info[0].split()[-1], '(RFC822)')
+        try:
+            status, info = self.M.uid('search', None, 'ALL')
             if status == "OK":
-                object = email.message_from_bytes(info[0][1])
-                if object['From'] == f"DistroKid <mailbot@distrokid.com>":
-                    self.callFunc(self.args[0], self.args[1])
+                status, info = self.M.uid('fetch', info[0].split()[-1], '(RFC822)')
+                if status == "OK":
+                    object = email.message_from_bytes(info[0][1])
+                    if object['From'] == f"DistroKid <mailbot@distrokid.com>":
+                        self.callFunc(self.args[0])
+        except:
+            self.event.set()
